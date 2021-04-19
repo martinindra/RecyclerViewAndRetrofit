@@ -25,12 +25,13 @@ class MainActivity : AppCompatActivity() {
 
     private fun showRecyclerView() {
         list.addAll(MangaData.listData)
-        mangaAdapter = MangaAdapter(list)
+        mangaAdapter = MangaAdapter(list, this@MainActivity)
 
         rvManga.apply {
             layoutManager = LinearLayoutManager(this@MainActivity)
             adapter = mangaAdapter
             setHasFixedSize(true)
+
         }
     }
 }

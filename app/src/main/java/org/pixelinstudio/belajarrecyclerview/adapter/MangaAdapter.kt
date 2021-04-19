@@ -1,17 +1,23 @@
 package org.pixelinstudio.belajarrecyclerview.adapter
 
+import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import org.pixelinstudio.belajarrecyclerview.MangaDetail
 import org.pixelinstudio.belajarrecyclerview.R
 import org.pixelinstudio.belajarrecyclerview.model.Manga
 
-class MangaAdapter(private val listManga: ArrayList<Manga>) : RecyclerView.Adapter<MangaAdapter.ViewHolder>() {
+class MangaAdapter(private val listManga: ArrayList<Manga>, val context: Context) : RecyclerView.Adapter<MangaAdapter.ViewHolder>() {
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MangaAdapter.ViewHolder {
         // fungsi untuk menampilkan wadah berisi data yang akan ditampilkan oleh recycler view pada saat aplikasi berjalan
@@ -42,10 +48,22 @@ class MangaAdapter(private val listManga: ArrayList<Manga>) : RecyclerView.Adapt
                 .load(manga.coverImage)
                 .apply(RequestOptions().override(90, 110))
                 .into(imgPhoto)
-
             textTitle.text = manga.title
             textAuthor.text = manga.author
             textGenre.text = manga.genre
+            itemView.setOnClickListener {
+                Toast.makeText(
+                        itemView.context,
+                        "Kamu memilih " + manga.title,
+                        Toast.LENGTH_SHORT
+                ).show()
+
+
+
+                val moveIntent = Intent(context, MangaDetail::class.java)
+                moveIntent.putExtra(MangaDetail.EXTRA, manga)
+                context.startActivity(moveIntent)
+            }
         }
     }
 }
